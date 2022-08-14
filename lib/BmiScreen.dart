@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:bmicalculator/resultScreen.dart';
 import 'package:flutter/material.dart';
 
 class BmiScreen extends StatefulWidget {
@@ -12,6 +15,7 @@ class _BmiScreenState extends State<BmiScreen> {
   double height = 120;
   int age = 15;
   int weight = 45;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,9 +148,9 @@ class _BmiScreenState extends State<BmiScreen> {
                       min: 80,
                       max: 220,
                       onChanged: (value) {
-                       setState((){
-                         height=value;
-                       });
+                        setState(() {
+                          height = value;
+                        });
                       },
                     ),
                   ],
@@ -189,10 +193,9 @@ class _BmiScreenState extends State<BmiScreen> {
                             children: [
                               FloatingActionButton(
                                 onPressed: () {
-                                  setState((){
-                                   age--;
-                                  }
-                                  );
+                                  setState(() {
+                                    age--;
+                                  });
                                 },
                                 heroTag: 'age-',
                                 mini: true,
@@ -202,10 +205,9 @@ class _BmiScreenState extends State<BmiScreen> {
                               ),
                               FloatingActionButton(
                                 onPressed: () {
-                                  setState((){
+                                  setState(() {
                                     age++;
-                                  }
-                                  );
+                                  });
                                 },
                                 heroTag: 'age+',
                                 mini: true,
@@ -252,10 +254,9 @@ class _BmiScreenState extends State<BmiScreen> {
                             children: [
                               FloatingActionButton(
                                 onPressed: () {
-                                  setState((){
+                                  setState(() {
                                     weight--;
-                                  }
-                                  );
+                                  });
                                 },
                                 heroTag: 'age-',
                                 mini: true,
@@ -265,7 +266,7 @@ class _BmiScreenState extends State<BmiScreen> {
                               ),
                               FloatingActionButton(
                                 onPressed: () {
-                                  setState((){
+                                  setState(() {
                                     weight++;
                                   });
                                 },
@@ -285,6 +286,35 @@ class _BmiScreenState extends State<BmiScreen> {
               ),
             ),
           ),
+           Container(
+              width: double.infinity,
+              color: Colors.blue,
+              child: MaterialButton(
+                onPressed: () {
+                  double result = weight / pow(height / 100, 2);
+                  print(result.round());
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => resultScreen(
+                        height: height,
+                        age: age,
+                        isMale: isMale,
+                        result: result.round(),
+                      ),
+                    ),
+                  );
+                },
+                child: Text(
+                  'CALCULATE',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+
         ],
       ),
     );
